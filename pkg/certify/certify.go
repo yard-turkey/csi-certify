@@ -5,9 +5,9 @@ import (
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/wongma7/csi-certify/pkg/certify/external"
-	"github.com/wongma7/csi-certify/pkg/certify/external-bash"
-	customTest "github.com/wongma7/csi-certify/pkg/certify/test"
+	"github.com/yard-turkey/csi-certify/pkg/certify/external"
+	"github.com/yard-turkey/csi-certify/pkg/certify/external-bash"
+	customTest "github.com/yard-turkey/csi-certify/pkg/certify/test"
 )
 
 func Test(t *testing.T, customTestDriver string) {

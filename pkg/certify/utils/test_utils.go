@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/wongma7/csi-certify/pkg/certify/driver"
+	"github.com/yard-turkey/csi-certify/pkg/certify/driver"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/kubernetes/test/e2e/storage/testsuites"

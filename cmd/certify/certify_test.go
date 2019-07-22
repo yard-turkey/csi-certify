@@ -4,7 +4,7 @@ import (
 	"flag"
 	"testing"
 
-	"github.com/wongma7/csi-certify/pkg/certify"
+	"github.com/yard-turkey/csi-certify/pkg/certify"
 	"k8s.io/kubernetes/test/e2e/framework"
 )
 
