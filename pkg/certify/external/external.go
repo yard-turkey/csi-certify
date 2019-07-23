@@ -3,6 +3,7 @@ package external
 import (
 	"flag"
 	"github.com/pkg/errors"
+	"github.com/yard-turkey/csi-certify/pkg/certify/test/additionalTests"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -44,6 +45,10 @@ func (d DriverDefParameter) Set(filename string) error {
 		return errors.Errorf("%q: DriverInfo.Name not set", filename)
 	}
 
+	addDescription := "External Storage - Additional Tests "  + testsuites.GetDriverNameWithFeatureTags(driver)
+	Describe(addDescription, func() {
+		additionalTests.DefineTestSuite(driver, additionalTests.AdditionalTestSuites)
+	})
 	description := "External Storage " + testsuites.GetDriverNameWithFeatureTags(driver)
 	Describe(description, func() {
 		testsuites.DefineTestSuite(driver, utils.CSITestSuites)
