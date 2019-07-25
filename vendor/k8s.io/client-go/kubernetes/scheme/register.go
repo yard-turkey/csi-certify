@@ -19,6 +19,7 @@ limitations under the License.
 package scheme
 
 import (
+	admissionregistrationv1 "k8s.io/api/admissionregistration/v1"
 	admissionregistrationv1beta1 "k8s.io/api/admissionregistration/v1beta1"
 	appsv1 "k8s.io/api/apps/v1"
 	appsv1beta1 "k8s.io/api/apps/v1beta1"
@@ -42,10 +43,13 @@ import (
 	extensionsv1beta1 "k8s.io/api/extensions/v1beta1"
 	networkingv1 "k8s.io/api/networking/v1"
 	networkingv1beta1 "k8s.io/api/networking/v1beta1"
+	nodev1alpha1 "k8s.io/api/node/v1alpha1"
+	nodev1beta1 "k8s.io/api/node/v1beta1"
 	policyv1beta1 "k8s.io/api/policy/v1beta1"
 	rbacv1 "k8s.io/api/rbac/v1"
 	rbacv1alpha1 "k8s.io/api/rbac/v1alpha1"
 	rbacv1beta1 "k8s.io/api/rbac/v1beta1"
+	schedulingv1 "k8s.io/api/scheduling/v1"
 	schedulingv1alpha1 "k8s.io/api/scheduling/v1alpha1"
 	schedulingv1beta1 "k8s.io/api/scheduling/v1beta1"
 	settingsv1alpha1 "k8s.io/api/settings/v1alpha1"
@@ -63,6 +67,7 @@ var Scheme = runtime.NewScheme()
 var Codecs = serializer.NewCodecFactory(Scheme)
 var ParameterCodec = runtime.NewParameterCodec(Scheme)
 var localSchemeBuilder = runtime.SchemeBuilder{
+	admissionregistrationv1.AddToScheme,
 	admissionregistrationv1beta1.AddToScheme,
 	appsv1.AddToScheme,
 	appsv1beta1.AddToScheme,
@@ -86,12 +91,15 @@ var localSchemeBuilder = runtime.SchemeBuilder{
 	extensionsv1beta1.AddToScheme,
 	networkingv1.AddToScheme,
 	networkingv1beta1.AddToScheme,
+	nodev1alpha1.AddToScheme,
+	nodev1beta1.AddToScheme,
 	policyv1beta1.AddToScheme,
 	rbacv1.AddToScheme,
 	rbacv1beta1.AddToScheme,
 	rbacv1alpha1.AddToScheme,
 	schedulingv1alpha1.AddToScheme,
 	schedulingv1beta1.AddToScheme,
+	schedulingv1.AddToScheme,
 	settingsv1alpha1.AddToScheme,
 	storagev1beta1.AddToScheme,
 	storagev1.AddToScheme,

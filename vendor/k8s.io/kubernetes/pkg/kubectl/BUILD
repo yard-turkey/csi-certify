@@ -17,7 +17,6 @@ go_test(
     ],
     embed = [":go_default_library"],
     deps = [
-        "//pkg/kubectl/scheme:go_default_library",
         "//pkg/kubectl/util:go_default_library",
         "//staging/src/k8s.io/api/apps/v1:go_default_library",
         "//staging/src/k8s.io/api/autoscaling/v1:go_default_library",
@@ -40,6 +39,7 @@ go_test(
         "//staging/src/k8s.io/client-go/scale:go_default_library",
         "//staging/src/k8s.io/client-go/scale/fake:go_default_library",
         "//staging/src/k8s.io/client-go/testing:go_default_library",
+        "//staging/src/k8s.io/kubectl/pkg/scheme:go_default_library",
     ],
 )
 
@@ -60,11 +60,7 @@ go_library(
     deps = [
         "//pkg/kubectl/apps:go_default_library",
         "//pkg/kubectl/describe/versioned:go_default_library",
-        "//pkg/kubectl/scheme:go_default_library",
         "//pkg/kubectl/util:go_default_library",
-        "//pkg/kubectl/util/deployment:go_default_library",
-        "//pkg/kubectl/util/podutils:go_default_library",
-        "//pkg/kubectl/util/slice:go_default_library",
         "//staging/src/k8s.io/api/apps/v1:go_default_library",
         "//staging/src/k8s.io/api/autoscaling/v1:go_default_library",
         "//staging/src/k8s.io/api/core/v1:go_default_library",
@@ -88,7 +84,12 @@ go_library(
         "//staging/src/k8s.io/client-go/rest:go_default_library",
         "//staging/src/k8s.io/client-go/scale:go_default_library",
         "//staging/src/k8s.io/client-go/util/retry:go_default_library",
+        "//staging/src/k8s.io/kubectl/pkg/scheme:go_default_library",
+        "//staging/src/k8s.io/kubectl/pkg/util/deployment:go_default_library",
+        "//staging/src/k8s.io/kubectl/pkg/util/podutils:go_default_library",
+        "//staging/src/k8s.io/kubectl/pkg/util/slice:go_default_library",
         "//vendor/k8s.io/utils/integer:go_default_library",
+        "//vendor/k8s.io/utils/pointer:go_default_library",
     ],
 )
 
@@ -107,15 +108,15 @@ filegroup(
         "//pkg/kubectl/apps:all-srcs",
         "//pkg/kubectl/cmd:all-srcs",
         "//pkg/kubectl/describe:all-srcs",
+        "//pkg/kubectl/drain:all-srcs",
         "//pkg/kubectl/explain:all-srcs",
         "//pkg/kubectl/generate:all-srcs",
         "//pkg/kubectl/generated:all-srcs",
         "//pkg/kubectl/metricsutil:all-srcs",
         "//pkg/kubectl/polymorphichelpers:all-srcs",
         "//pkg/kubectl/proxy:all-srcs",
-        "//pkg/kubectl/scheme:all-srcs",
         "//pkg/kubectl/util:all-srcs",
-        "//pkg/kubectl/validation:all-srcs",
+        "//pkg/kubectl/version:all-srcs",
     ],
     tags = ["automanaged"],
 )
