@@ -21,6 +21,7 @@ import (
 	_ "github.com/onsi/gomega"
 	testUtils "github.com/yard-turkey/csi-certify/pkg/certify/utils"
 	"k8s.io/kubernetes/test/e2e/framework"
+	e2elog "k8s.io/kubernetes/test/e2e/framework/log"
 	"k8s.io/kubernetes/test/e2e/framework/testfiles"
 	"k8s.io/kubernetes/test/e2e/storage/testsuites"
 	"k8s.io/kubernetes/test/e2e/storage/utils"
@@ -39,7 +40,7 @@ func RunCustomTestDriver(customTestDriver string) {
 			}
 		} else {
 			if testUtils.CSITestDrivers[customTestDriver] == nil {
-				framework.Failf("Given TestDriver %s, does not exist", customTestDriver)
+				e2elog.Failf("Given TestDriver %s, does not exist", customTestDriver)
 			}
 
 			runTestForDriver(testUtils.CSITestDrivers[customTestDriver]())

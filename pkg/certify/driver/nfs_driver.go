@@ -6,6 +6,8 @@ import (
 	"k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/kubernetes/test/e2e/framework"
+	e2elog "k8s.io/kubernetes/test/e2e/framework/log"
+	"k8s.io/kubernetes/test/e2e/framework/volume"
 	"k8s.io/kubernetes/test/e2e/storage/testpatterns"
 	"k8s.io/kubernetes/test/e2e/storage/testsuites"
 )
@@ -91,7 +93,7 @@ func (n *nfsDriver) PrepareTest(f *framework.Framework) (*testsuites.PerTestConf
 	cleanup, err := config.Framework.CreateFromManifests(nil, n.manifests...)
 
 	if err != nil {
-		framework.Failf("deploying %s driver: %v", n.driverInfo.Name, err)
+		e2elog.Failf("deploying %s driver: %v", n.driverInfo.Name, err)
 	}
 
 	return config, func() {
@@ -111,16 +113,8 @@ func (n *nfsDriver) CreateVolume(config *testsuites.PerTestConfig, volType testp
 	case testpatterns.PreprovisionedPV:
 
 		//Create nfs server pod
-		c := framework.VolumeTestConfig{
-			Namespace:          ns.Name,
-			Prefix:             "nfs",
-			ServerImage:        "gcr.io/kubernetes-e2e-test-images/volume/nfs:1.0",
-			ServerPorts:        []int{2049},
-			ServerVolumes:      map[string]string{"": "/exports"},
-			ServerReadyMessage: "NFS started",
-		}
+		c, serverPod, serverIP := volume.NewNFSServer(cs, ns.Name, []string{})
 		config.ServerConfig = &c
-		serverPod, serverIP := framework.CreateStorageServer(cs, c)
 
 		return &nfsVolume{
 			serverIP:  serverIP,
@@ -131,11 +125,11 @@ func (n *nfsDriver) CreateVolume(config *testsuites.PerTestConfig, volType testp
 	case testpatterns.DynamicPV:
 		// Do nothing
 	default:
-		framework.Failf("Unsupported volType:%v is specified", volType)
+		e2elog.Failf("Unsupported volType:%v is specified", volType)
 	}
 	return nil
 }
 
 func (v *nfsVolume) DeleteVolume() {
-	framework.CleanUpVolumeServer(v.f, v.serverPod)
+	volume.CleanUpVolumeServer(v.f, v.serverPod)
 }

@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"math/rand"
 
+	. "github.com/onsi/ginkgo"
 	storagev1 "k8s.io/api/storage/v1"
 	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/kubernetes/test/e2e/framework"
+	e2elog "k8s.io/kubernetes/test/e2e/framework/log"
 	"k8s.io/kubernetes/test/e2e/storage/testpatterns"
 	"k8s.io/kubernetes/test/e2e/storage/testsuites"
 	"k8s.io/kubernetes/test/e2e/storage/utils"
-
-	. "github.com/onsi/ginkgo"
 )
 
 var HostPathDriver func() testsuites.TestDriver
@@ -106,7 +106,7 @@ func (h *hostpathCSIDriver) PrepareTest(f *framework.Framework) (*testsuites.Per
 	},
 		h.manifests...)
 	if err != nil {
-		framework.Failf("deploying %s driver: %v", h.driverInfo.Name, err)
+		e2elog.Failf("deploying %s driver: %v", h.driverInfo.Name, err)
 	}
 
 	return config, func() {
