@@ -18,10 +18,11 @@ package utils
 
 import (
 	"path"
+	"strconv"
 	"strings"
 
 	appsv1 "k8s.io/api/apps/v1"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	storagev1 "k8s.io/api/storage/v1"
 	"k8s.io/kubernetes/test/e2e/framework"
 )
@@ -48,10 +49,6 @@ import (
 //
 // Driver deployments that are different will have to do the patching
 // without this function, or skip patching entirely.
-//
-// TODO (?): the storage.csi.image.version and storage.csi.image.registry
-// settings are ignored. We could patch the image definitions or deprecate
-// those options.
 func PatchCSIDeployment(f *framework.Framework, o PatchCSIOptions, object interface{}) error {
 	rename := o.OldDriverName != "" && o.NewDriverName != "" &&
 		o.OldDriverName != o.NewDriverName
@@ -98,8 +95,8 @@ func PatchCSIDeployment(f *framework.Framework, o PatchCSIOptions, object interf
 				// as the snapshotter here.
 				container.Args = append(container.Args, "--snapshotter="+o.NewDriverName)
 			case o.ClusterRegistrarContainerName:
-				if o.PodInfoVersion != nil {
-					container.Args = append(container.Args, "--pod-info-mount-version="+*o.PodInfoVersion)
+				if o.PodInfo != nil {
+					container.Args = append(container.Args, "--pod-info-mount="+strconv.FormatBool(*o.PodInfo))
 				}
 			}
 		}
@@ -163,6 +160,6 @@ type PatchCSIOptions struct {
 	// If non-empty, all pods are forced to run on this node.
 	NodeName string
 	// If not nil, the argument to pass to the cluster-driver-registrar's
-	// pod-info-mount-version argument.
-	PodInfoVersion *string
+	// pod-info-mount argument.
+	PodInfo *bool
 }

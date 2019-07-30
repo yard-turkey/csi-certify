@@ -112,6 +112,11 @@ func (d *driverDefinition) SkipUnsupportedTest(pattern testpatterns.TestPattern)
 			supported = true
 		}
 	}
+
+	if pattern == testpatterns.DynamicSnapshot {
+		supported = true
+	}
+
 	if !supported {
 		framework.Skipf("Driver %q does not support volume type %q - skipping", d.DriverInfo.Name, pattern.VolType)
 	}

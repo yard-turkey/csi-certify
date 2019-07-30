@@ -16,6 +16,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/kubernetes/pkg/api/legacyscheme"
 	"k8s.io/kubernetes/test/e2e/framework"
+	e2elog "k8s.io/kubernetes/test/e2e/framework/log"
 	"k8s.io/kubernetes/test/e2e/storage/testpatterns"
 	"k8s.io/kubernetes/test/e2e/storage/testsuites"
 	"os/exec"
@@ -177,7 +178,7 @@ func (b bashDriver) CreateVolume(config *testsuites.PerTestConfig, volumeType te
 
 	if cvErr != nil {
 		fmt.Printf("Unable to create volume\n")
-		framework.Failf(cvErr.Error())
+		e2elog.Failf(cvErr.Error())
 	}
 	response := make(map[string]string)
 	err := json.Unmarshal([]byte(createVolOutput), &response)

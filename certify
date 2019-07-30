@@ -78,7 +78,7 @@ esac
 
 runTests()
 {
-	OUTPUT=$(go test -v ./cmd/... -ginkgo.v -ginkgo.progress --kubeconfig=$kubeconfig --driverdef=../../$driverDefPath -ginkgo.skip=$skipRegExp -timeout=0 | tee /dev/tty)	
+	OUTPUT=$(go test -v ./cmd/... -ginkgo.v -ginkgo.progress --kubeconfig=$kubeconfig --driverdef=$driverDefPath -ginkgo.skip=$skipRegExp -timeout=0 | tee /dev/tty)	
 	
 	printf "\n\n\n\n"
         center "CERTIFICATION SUMMARY"
@@ -161,12 +161,13 @@ printSupportedFeatures()
 	declare -a passedTests=("${!1}")
 	declare -a failedTests=("${!2}")
 
-	supportedFeatures=("subPath" "volumeMode" "volumeIO" "provisioning")
+	supportedFeatures=("subPath" "volumeMode" "volumeIO" "provisioning" "snapshotting")
 
 	declare "array_subPath=-1" # A workaround for a hashmap
 	declare "array_volumeMode=-1"
 	declare "array_volumeIO=-1"
 	declare "array_provisioning=-1"
+	declart "array_snapshotting=-1"
 	
 	for test in "${passedTests[@]}"
 	do
@@ -175,6 +176,7 @@ printSupportedFeatures()
 			*"volumeMode"*)				declare "array_volumeMode=1";;
 			*"volumeIO"*)				declare "array_volumeIO=1";;
 			*"provisioning"*)			declare "array_provisioning=1";;
+			*"snapshot"*)                       	declare "array_snapshotting=1";;
 		esac
 	done
 
@@ -185,6 +187,7 @@ printSupportedFeatures()
 			*"volumeMode"*)				declare "array_volumeMode=0";;
 			*"volumeIO"*)				declare "array_volumeIO=0";;
 			*"provisioning"*)			declare "array_provisioning=0";;
+                        *"snapshot"*)                   	declare "array_snapshotting=0";;
 		esac
 	done
 

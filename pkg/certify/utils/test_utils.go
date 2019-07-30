@@ -14,6 +14,7 @@ var CSITestSuites = []func() testsuites.TestSuite{
 	testsuites.InitVolumeModeTestSuite,
 	testsuites.InitSubPathTestSuite,
 	testsuites.InitProvisioningTestSuite,
+	testsuites.InitSnapshottableTestSuite,
 }
 
 var CSITestDrivers = map[string]func() testsuites.TestDriver{
